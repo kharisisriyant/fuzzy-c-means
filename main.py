@@ -1,4 +1,6 @@
 import csv
+from initialize import initialize
+from normalize import normalize
 
 def calculateCenterVector():
 	for j, c_j in enumerate(centers):
@@ -17,10 +19,10 @@ def calculateCenterVector():
 		for a, att in enumerate(c_j):
 			att = sigma_uijm_xi[a] / sigma_uijm
 
-def calculateXMinC(x, c):
+def calculateXMinC(x_i, c):
 	res = []
 	for i in range(len(x)):
-		res.append(x[i]-c[i])
+		res.append(x_i[i]-c[i])
 
 	#calculate magnitud res
 	mag = 0
@@ -44,9 +46,9 @@ def update(matU, m, c):
 	for i in range(len(matU)):
 		for j in range(len(matU[i])):
 			sumDiv = 0
-			xiMinCj = calculateXMinC(x[i]-c[j])
+			xiMinCj = calculateXMinC(x[i],c[j])
 			for k in range(len(x[i])):
-				xiMinCk = calculateXMinC(x[i]-c[k])
+				xiMinCk = calculateXMinC(x[i],c[k])
 				#ximincj/ximinck
 				divNoPow = xiMinCj/xiMinCk
 				#pangkatkan
@@ -76,16 +78,16 @@ def checkStop(matUnext,matUnow, epsilon):
 	else:
 		return False
 
-def main():
-	#buka file data CencucIncome
-	file = open('data/CencusIncomeNumericFix.data.txt', 'w')
-	reader = csv.reader(file)
-	writer = csv.writer(fw)
-	numericdata = []
-	for row in reader:
-		datarow = [row[0], row[2], row[4], row[10], row[11], row[12]]
-		writer.writerow(datarow)
-		numericdata = numericdata + datarow
+# def main():
+# 	#buka file data CencucIncome
+# 	file = open('data/CencusIncomeNumericFix.data.txt', 'w')
+# 	reader = csv.reader(file)
+# 	writer = csv.writer(fw)
+# 	numericdata = []
+# 	for row in reader:
+# 		datarow = [row[0], row[2], row[4], row[10], row[11], row[12]]
+# 		writer.writerow(datarow)
+# 		numericdata = numericdata + datarow
 
-if __name__ == "__main__":
-	main() ## with if
+# if __name__ == "__main__":
+# 	main() ## with if
