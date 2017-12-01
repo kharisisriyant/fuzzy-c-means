@@ -1,21 +1,24 @@
 import csv
 
-def calculateCenterVector():
+def calculateCenterVector(matU, m):
 	for j, c_j in enumerate(centers):
 		sigma_uijm_xi = []
 		sigma_uijm = 0
 		for i, x_i in enumerate(x):
-			sigma_uijm = sigma_uijm + pow(u[i][j], 2)
+			sigma_uijm = sigma_uijm + pow(matU[i][j], 2/(m-1))
 
 			if (i == 0):
 				for a in range(len(c_j)):
-					sigma_uijm_xi = sigma_uijm_xi + pow(u[i][j], 2) * x_i[a]
+					sigma_uijm_xi = sigma_uijm_xi + pow(matU[i][j], 2/(m-1)) * x_i[a]
 			else:
 				for a, att in range(len(c_j)):
-					sigma_uijm_xi[a] = sigma_uijm_xi[a] + pow(u[i][j], 2) * x_i[a]
+					sigma_uijm_xi[a] = sigma_uijm_xi[a] + pow(matU[i][j], 2/(m-1)) * x_i[a]
 
-		for a, att in enumerate(c_j):
-			att = sigma_uijm_xi[a] / sigma_uijm
+		#belum dites
+		for a in range(len(c_j)):
+			c_j[a] = sigma_uijm_xi[a] / sigma_uijm
+
+	return c_j
 
 def calculateXMinC(x, c):
 	res = []
@@ -44,9 +47,9 @@ def update(matU, m, c):
 	for i in range(len(matU)):
 		for j in range(len(matU[i])):
 			sumDiv = 0
-			xiMinCj = calculateXMinC(x[i]-c[j])
+			xiMinCj = calculateXMinC(x[i], c[j])
 			for k in range(len(x[i])):
-				xiMinCk = calculateXMinC(x[i]-c[k])
+				xiMinCk = calculateXMinC(x[i], c[k])
 				#ximincj/ximinck
 				divNoPow = xiMinCj/xiMinCk
 				#pangkatkan
