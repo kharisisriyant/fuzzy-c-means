@@ -27,5 +27,6 @@ def initialize(numIns, numCls):
 		matU.append(u)
 	return matU
 
+#test initialize
 matU = initialize(5, 4)
 print(matU)
