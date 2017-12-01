@@ -1,4 +1,5 @@
 import csv
+from utils import normalize
 
 def main():
 	#buka file data CencucIncome, ambil semua data numeric
