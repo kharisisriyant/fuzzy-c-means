@@ -6,6 +6,10 @@ def normalize(data):
 	normalizer = preprocessing.Normalizer().fit(data)
 	return normalizer.transform(data)
 
+def normalizeTestData(dataTrain, dataTest):
+	normalizer = preprocessing.Normalizer().fit(dataTrain)
+	return normalizer.transform(dataTest)
+
 def initialize(numIns, numCls):
 	#Inisialisasi matriks Uij
 	#untuk setiap ui, total nilai ui pada j=0 s.d. j=N adalah 1
@@ -20,17 +24,17 @@ def initialize(numIns, numCls):
 	matU = []
 	for  i in range(numIns):
 		totalProb = 0 #nilai batas bawah
-		u = []
+		u = [0.5, 0.5]
 		upBorder=1
-		for j in range(numCls):
-			if (j != numCls-1):
-				#random nilai val antara sum nilai uij dengan 1
-				val = random.uniform(0,upBorder)
-				totalProb = totalProb+val
-				upBorder = 1-totalProb
-			else:
-				val = 1-totalProb
-			u.append(val)
+		# for j in range(numCls):
+		# 	if (j != numCls-1):
+		# 		#random nilai val antara sum nilai uij dengan 1
+		# 		val = random.uniform(0,upBorder)
+		# 		totalProb = totalProb+val
+		# 		upBorder = 1-totalProb
+		# 	else:
+		# 		val = 1-totalProb
+		# 	u.append(val)
 		matU.append(u)
 	return matU
 

@@ -5,54 +5,54 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 
 def main():
-	# ################################################################
-	# ##################### FUZZY C-MEANS ############################
-	# ################################################################
+	################################################################
+	##################### FUZZY C-MEANS ############################
+	################################################################
 
-	# numericdata = []
-	# centers = []
+	numericdata = []
+	centers = []
 
-	# # Buka file data CencucIncome
-	# file = open('data/CencusIncomeNumeric.data.txt', 'r')
-	# reader = csv.reader(file)
+	# Buka file data CencucIncome
+	file = open('data/CencusIncomeNumeric.data.txt', 'r')
+	reader = csv.reader(file)
 
-	# # Masukin train data
-	# for row in reader:
-	# 	for i in range(len(row)):
-	# 		row[i] = float(row[i])
-	# 	numericdata.append(row)
+	# Masukin train data
+	for row in reader:
+		for i in range(len(row)):
+			row[i] = float(row[i])
+		numericdata.append(row)
 
-	# # Initialize variable
-	# n_attr = len(numericdata[0])
-	# n_cluster = 2
-	# m = 2
-	# epsilon = 0.00001
-	# isBreak = False
-	# epoch = 1
+	# Initialize variable
+	n_attr = len(numericdata[0])
+	n_cluster = 2
+	m = 4
+	epsilon = 0.00001
+	isBreak = False
+	epoch = 1
 
-	# # Initialize matrix U
-	# matU = initialize(len(numericdata), n_cluster)
+	# Initialize matrix U
+	matU = initialize(len(numericdata), n_cluster)
 
-	# # Initialize centroid matrix
-	# for i in range(n_cluster):
-	# 	centers.append([0]*n_attr)
+	# Initialize centroid matrix
+	for i in range(n_cluster):
+		centers.append([0]*n_attr)
 
-	# while not isBreak:
-	# 	print(epoch)
+	while not isBreak:
+		print(epoch)
 
-	# 	# Fuzzy C Means
-	# 	calculateCenterVector(matU, m, centers, numericdata)
-	# 	isBreak = update_u(matU, numericdata, centers, m, epsilon)
+		# Fuzzy C Means
+		calculateCenterVector(matU, m, centers, numericdata)
+		isBreak = update_u(matU, numericdata, centers, m, epsilon)
 
-	# 	epoch = epoch + 1
+		epoch = epoch + 1
 
-	# # Save Matrix U to file
-	# with open('data/MatUFinal.data.pkl', 'wb') as f:
-	# 	pickle.dump(matU, f)
+	# Save Matrix U to file
+	with open('data/MatUFinal5050.data.pkl', 'wb') as f:
+		pickle.dump(matU, f)
 
-	# ################################################################
-	# ################## FUZZY C-MEANS DONE ##########################
-	# ################################################################
+	################################################################
+	################## FUZZY C-MEANS DONE ##########################
+	################################################################
 
 	# GET Y TRAIN
 	y_train = []
@@ -71,7 +71,7 @@ def main():
 
 	# GET Y PREDICT	
 	# Load Matrix U from file
-	with open('data/MatUFinal.data.pkl', 'rb') as f:
+	with open('data/MatUFinal5050.data.pkl', 'rb') as f:
 		matU = pickle.load(f)
 
 	y_predict = []
