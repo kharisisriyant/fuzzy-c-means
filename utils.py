@@ -24,17 +24,17 @@ def initialize(numIns, numCls):
 	matU = []
 	for  i in range(numIns):
 		totalProb = 0 #nilai batas bawah
-		u = [0.5, 0.5]
+		u = []
 		upBorder=1
-		# for j in range(numCls):
-		# 	if (j != numCls-1):
-		# 		#random nilai val antara sum nilai uij dengan 1
-		# 		val = random.uniform(0,upBorder)
-		# 		totalProb = totalProb+val
-		# 		upBorder = 1-totalProb
-		# 	else:
-		# 		val = 1-totalProb
-		# 	u.append(val)
+		for j in range(numCls):
+			if (j != numCls-1):
+				#random nilai val antara sum nilai uij dengan 1
+				val = random.uniform(0,upBorder)
+				totalProb = totalProb+val
+				upBorder = 1-totalProb
+			else:
+				val = 1-totalProb
+			u.append(val)
 		matU.append(u)
 	return matU
 

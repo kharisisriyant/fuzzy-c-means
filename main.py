@@ -13,7 +13,7 @@ def main():
 	centers = []
 
 	# Buka file data CencucIncome
-	file = open('data/CencusIncomeNumeric.data.txt', 'r')
+	file = open('data/CencusIncomeNumericNormalized.data.txt', 'r')
 	reader = csv.reader(file)
 
 	# Masukin train data
@@ -47,7 +47,10 @@ def main():
 		epoch = epoch + 1
 
 	# Save Matrix U to file
-	with open('data/MatUFinal5050.data.pkl', 'wb') as f:
+	with open('data/CentroidFinal.data.pkl', 'wb') as f:
+		pickle.dump(centers, f)
+
+	with open('data/MatUFinal.data.pkl', 'wb') as f:
 		pickle.dump(matU, f)
 
 	################################################################
@@ -71,7 +74,7 @@ def main():
 
 	# GET Y PREDICT	
 	# Load Matrix U from file
-	with open('data/MatUFinal5050.data.pkl', 'rb') as f:
+	with open('data/MatUFinal.data.pkl', 'rb') as f:
 		matU = pickle.load(f)
 
 	y_predict = []
@@ -85,6 +88,61 @@ def main():
 	print(f1_score(y_train, y_predict))
 	print(accuracy_score(y_train, y_predict))
 
-	
+def testData():
+	# Buka file data CencucIncome
+	file = open('data/CencusIncomeNumericNormalized.test.txt', 'r')
+	reader = csv.reader(file)
+
+	numericdata = []
+	centers = []
+
+	# Masukin train data
+	for row in reader:
+		for i in range(len(row)):
+			row[i] = float(row[i])
+		numericdata.append(row)
+
+	file.close()
+
+	n_cluster = 2
+	m = 4
+	epsilon = 0.00001
+	isBreak = False
+	epoch = 1
+
+	matU = initialize(len(numericdata), n_cluster)
+
+	with open('data/CentroidFinal.data.pkl', 'wb') as f:
+		pickle.dump(centers, f)
+
+	update_u(matU, numericdata, centers, m, epsilon)
+
+	# Buka file data CencucIncome
+	file = open('data/CencusIncome.test.txt', 'r')
+	reader = csv.reader(file)
+
+	y_train = []
+
+	# Masukin label test data
+	for row in reader:
+		print(row)
+		temp_str = row[-1].strip()
+		if(temp_str =="<=50K"):
+			y_train.append(1)
+		elif(temp_str==">50K"):
+			y_train.append(0)
+
+	y_predict = []
+
+	for element in matU:
+		if(element[0]>element[1]):
+			y_predict.append(0)
+		else:
+			y_predict.append(1)
+
+	print(f1_score(y_train, y_predict))
+	print(accuracy_score(y_train, y_predict))
+
 if __name__ == "__main__":
 	main() ## with if
+	testData()
